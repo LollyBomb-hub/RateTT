@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0bt8a3e" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.19.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.4.0">
+  <decision id="RateDMNDecision" name="Decision 1">
+    <decisionTable id="DecisionTable_1yl4fxt" hitPolicy="FIRST">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>inn</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0tjpgv4">
+        <inputExpression id="LiteralExpression_0hp4nfl" typeRef="number">
+          <text>capital</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="rate" typeRef="boolean" />
+      <rule id="DecisionRule_02hfeqj">
+        <description>Инн с тест кейса, из-за которого падал zeebe</description>
+        <inputEntry id="UnaryTests_1a39jrh">
+          <text>length(inn)&lt;2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0u1hm55">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fojuvx">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_13bs2an">
+        <description>ИНН ИП содержит 12 цифр</description>
+        <inputEntry id="UnaryTests_0ua6n4e">
+          <text>length(inn)=12</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vwxseq">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04k9ede">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0sv59tb">
+        <description>Регион Красноярского Края = 24</description>
+        <inputEntry id="UnaryTests_1ezkid7">
+          <text>if length(inn) &gt;= 2 then substring(inn, 1, 2)=24 else true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1x84n0e">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0i8q49d">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1smby5m">
+        <description>Нерезидент РФ</description>
+        <inputEntry id="UnaryTests_0zoekvy">
+          <text>starts with(inn, "9909")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fket4f">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1g35sqa">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jjlv85">
+        <description>Капитал компании меньше 5млн</description>
+        <inputEntry id="UnaryTests_1x4l2j3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0krno1n">
+          <text>capital&lt;5000000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dfm6it">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_08ebslm">
+        <inputEntry id="UnaryTests_1xit07e">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fafnxf">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1q4tkbk">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="RateDMNDecision">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
